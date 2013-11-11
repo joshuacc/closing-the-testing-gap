@@ -1,0 +1,1023 @@
+<!--
+Google IO 2012 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Joshua Clanton</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/jasmine-logo.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>About Me</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Senior UI Developer at Hobsons, where we build cool stuff to help teachers, students, and school counselors</li>
+        <li>Author of an upcoming book on Jasmine</li>
+        <li>Publisher of <em style="font-style: italic">A Drip of JavaScript</em>, a weekly JavaScript newsletter</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>You're here to learn something</h2>
+      <h3>So you probably have some questions</h3>
+    </hgroup>
+    <article>
+      <p>Like...</p>
+      <ul class="build fade">
+        <li>What is unit testing?</li>
+        <li>What is Test Driven Development?</li>
+        <li>What is Jasmine?</li>
+        <li>How can these things help me?</li>
+        <li>How do I use Jasmine?</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>So I have some questions for you</h2>
+    </hgroup>
+    <article>
+      <p>Raise your hands for yes.</p>
+      <ul class="build fade">
+        <li>How many of you are primarily JS developers?</li>
+        <li>How many of you know what unit testing is?</li>
+        <li>How many of you write unit tests for your JS?</li>
+        <li>How many of you know what Test Driven Development is?</li>
+        <li>How many of you do TDD for your JS?</li>
+        <li>How many of you have heard of Jasmine before this talk?</li>
+        <li>How many of you use Jasmine?</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <article class="flexbox vcenter">
+      <img src="images/answers.jpg" alt="Description" title="Description">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Unit Testing is&hellip;</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>the practice of writing code</li>
+        <li>which tests the correctness of</li>
+        <li>small(ish) units of your code.</li>
+      </ul>
+      <pre class="prettyprint" data-lang="javascript">
+describe("Addition function", function() {
+  it("should add numbers", function() {
+    <b>expect(add(1, 1)).toBe(2);</b>
+  });
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Test Driven Development (TDD) is&hellip;</h2>
+    </hgroup>
+    <article>
+      <p>The practice of writing your tests first, so that they can guide your implementation.</p>
+      <p><b>The steps of doing TDD are:</b></p>
+      <ol class="build">
+        <li>Write your test first, and see it fail. <span class="red">(Red)</span></li>
+        <li>Write your unit of code and see the test pass. <span class="green">(Green)</span></li>
+        <li>Make your code better, using the tests to keep you safe. <span class="blue">(Refactor)</span></li>
+      </ol>
+    </article>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/jasmine.jpg)">
+    <hgroup>
+      <h2 class="white">Jasmine is&hellip;</h2>
+      <h3 class="white">A spunky Disney princess?</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Just kidding. :-)</h2>
+      <h3>Jasmine is&hellip;</h3>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>A JavaScript testing library</li>
+        <li>With an easy to use syntax</li>
+        <li>That can be used in the browser</li>
+        <li>Or on the command line</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Tests vs. Specs</h2>
+      <h3>What's the difference?</h3>
+    </hgroup>
+    <article>
+      <p><b>They're the same thing.</b></p>
+      <p>Jasmine uses the term "specs" to emphasize that they should be written <b>before</b> you start coding.</p>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>What a Jasmine Suite Looks Like</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>At least one <code>describe</code> block (they can be nested)</li>
+        <li>At least one <code>it</code> block which contains a spec</li>
+        <li>At least one expectation, which consists of:
+          <ul class="build">
+            <li><code>expect</code> which is passed an expression (called the "actual" value)</li>
+            <li>A matcher with the expected value (<code>toBe</code> and <code>toBeGreaterThan</code>)</li>
+          </ul>
+      </ul>
+      <pre class="prettyprint" data-lang="javascript">
+describe("Calculator", function() {
+  describe("Addition function", function() {
+    it("should add numbers", function() {
+      expect(add(1, 1)).toBe(2);
+      expect(add(2, 2)).toBeGreaterThan(3);
+    });
+  });
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>The Spec Runner</h2>
+    </hgroup>
+    <article>
+      <p>Is just an ordinary HTML file that you load in your browser.</p>
+      <p>Include the Jasmine library, your sources, your specs, and you have a test environment.</p>
+      <pre class="prettyprint" data-lang="html">
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;lib/jasmine-1.3.1/jasmine.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;lib/jasmine-1.3.1/jasmine.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;lib/jasmine-1.3.1/jasmine-html.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- include source files here... --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;src/Player.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;src/Song.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- include spec files here... --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;spec/SpecHelper.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;spec/PlayerSpec.js&quot;&gt;&lt;/script&gt;
+</pre>
+    </article>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/specrunner.png)">
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/jasmine-logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Using Jasmine</h2>
+      <h3>The Test-Driven Way</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>The Plan</h2>
+    </hgroup>
+    <article>
+      <p>We're going to write a mini string library which has the following functions.</p>
+      <ol class="build">
+        <li>A "first word" function which returns the first word of a string.</li>
+        <li>An "nth word" function which returns any word <code>n</code> of a string.</li>
+      </ol>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>First we describe it</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>We're testing the <code>stringUtil</code> library.</li>
+        <li>Specifically we're testing the <code>firstWord</code> function.</li>
+      </ul>
+      <pre class="prettyprint" data-lang="javascript">
+describe("stringUtil", function() {
+  describe("firstWord", function() {
+    // Specs go here.
+  });
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Then we spec it</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+describe("stringUtil", function() {
+  describe("firstWord", function() {
+    <b>it("should return the first word of a string", function () {
+      expect(stringUtil.firstWord("one two")).toBe("one");
+    });</b>
+  });
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Then we run the specs</h2>
+    </hgroup>
+    <article>
+      <img src="images/failing1.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <article class="flexbox vcenter">
+      <img src="images/success-kid.jpg" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Confused?</h2>
+      <h3>Remember the TDD process.</h3>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li><span class="red">Red</span> -> <span class="green">Green</span> -> <span class="blue">Refactor</span></li>
+        <li>If you don't get red after writing your specs first, then there is something wrong with your specs.</li>
+        <li>Basically, that first <span class="red">red</span> means you're doing the right thing.</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Back to that failure</h2>
+      <h3><code>stringUtil</code> isn't defined.</h3>
+    </hgroup>
+    <article>
+      <img src="images/failing1.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>So let's define it</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Now we get a different error</h2>
+      <h3><code>stringUtil</code> doesn't have a <code>firstWord</code> method</h3>
+    </hgroup>
+    <article>
+      <img src="images/failing2.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Let's fix that</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  <b>firstWord: function() {
+    // Not doing anything yet.
+  }</b>
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Our function isn't returning anything</h2>
+    </hgroup>
+    <article>
+      <img src="images/failing3.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Now for some actual logic</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  firstWord: <b>function(text) {
+    var textWords = text.split(" ");
+    return textWords[0];
+  }</b>
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>We got to <span class="green">green</span>!</h2>
+    </hgroup>
+    <article>
+      <img src="images/passing1.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>But that code wasn't the greatest</h2>
+      <h3>Time to <span class="blue">refactor</span></h3>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  firstWord: function(text) {
+    <b>return text.split(" ")[0];</b>
+  }
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2><span class="green">Green</span> again!</h2>
+    </hgroup>
+    <article>
+      <img src="images/passing1.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Now lets write the specs for <code>nthWord</code></h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+describe("stringUtil", function() {
+  describe("firstWord", function() {
+    it("should return the first word of a string", function () {
+      expect(stringUtil.firstWord("one two")).toBe("one");
+    });
+  });
+
+  <b>describe("nthWord", function() {
+    it("should return the nth word of a string", function () {
+      expect(stringUtil.nthWord("one two", 1)).toBe("one");
+      expect(stringUtil.nthWord("one two", 2)).toBe("two");
+    });
+  });</b>
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>We get our first <span class="red">failing</span> spec</h2>
+      <h3><code>stringUtil</code> doesn't have a <code>nthWord</code> method</h3>
+    </hgroup>
+    <article>
+      <img src="images/failing4.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Let's write <code>nthWord</code></h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  firstWord: function(text) {
+    return text.split(" ")[0];
+  },
+
+  <b>nthWord: function(text, i) {
+    return text.split(" ")[i - 1];
+  }</b>
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2><span class="green">Green</span> on the first try!</h2>
+    </hgroup>
+    <article>
+      <img src="images/passing2.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>What about <span class="blue">refactoring</span>?</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>In this case our <code>nthWord</code> method is so simple that there isn't really anything to refactor in the method itself.</li>
+        <li>But you might have noticed that we have some repetition going on between our two methods.
+          <ul class="build">
+            <li>We could refactor that out now.</li>
+            <li>Or we could introduce another test that will help us catch this repetition.</li>
+          </ul>
+        </li>
+      </ul>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  firstWord: function(text) {
+    <b>return text.split(" ")[0];</b>
+  },
+
+  nthWord: function(text, i) {
+    <b>return text.split(" ")[i - 1];</b>
+  }
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Testing implementation vs. interface</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Normally when testing, you should only be testing the interface, not the implementation.</li>
+        <li>But in certain cases, you may want to ensure that a method is implemented in a certain way.
+          <ul class="build">
+            <li>If you are performance sensitive and need to delegate to a heavily optimized method.</li>
+            <li>If the logic is complicated to get right and you need to be absolutely sure that it is delegated to a dedicated method.</li>
+            <li>If you are delegating to an external library and need to ensure that the correct parameters are sent.</li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Let's use our imagination!</h2>
+    </hgroup>
+    <article class="flexbox vcenter">
+      <img src="images/imagine.jpg" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Here's our updated spec for <code>firstWord</code></h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+describe("firstWord", function() {
+  it("should return the first word of a string", function () {
+    expect(stringUtil.firstWord("one two")).toBe("one");
+  });
+
+  it("should delegate its logic to nthWord", function () {
+    <b>spyOn(stringUtil, "nthWord");
+    stringUtil.firstWord("one two");
+
+    expect(stringUtil.nthWord).toHaveBeenCalled();</b>
+  });
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/bond.jpg)">
+    <hgroup>
+      <h2 class="white">So, you're a spy?</h2>
+    </hgroup>
+    <article>
+      <p class="white" style="width: 50%">Jasmine spies are like double-agents. They replace an ordinary function and report back what they're doing.</p>
+      <p class="white">They can:</p>
+      <ul class="build white">
+        <li>Report that they were called.</li>
+        <li>Report how many times they were called.</li>
+        <li>Report what parameters they were called with.</li>
+        <li>Invoke the original function which they replaced.<br />(If needed to preserve functionality in the test).</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Our spec <span class="red">fails</span></h2>
+      <h3><code>nthWord</code> isn't being called</h3>
+    </hgroup>
+    <article>
+      <img src="images/failing5.png">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>We rework <code>firstWord</code> to delegate to <code>nthWord</code></h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  firstWord: function(text) {
+    <b>return this.nthWord(text, 1);</b>
+  },
+
+  nthWord: function(text, i) {
+    return text.split(" ")[i - 1];
+  }
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>And everything is <span class="green">green</span></h2>
+    </hgroup>
+    <article>
+      <img src="images/passing3.png">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Do we need to <span class="blue">refactor</span>?</h2>
+      <h3>Looks clean to me!</h3>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="javascript">
+var stringUtil = {
+  firstWord: function(text) {
+    return this.nthWord(text, 1);
+  },
+
+  nthWord: function(text, i) {
+    return text.split(" ")[i - 1];
+  }
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>So why go through all that?</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Leads to better code design by encouraging smaller units of code which you can combine to achieve your larger goals.</li>
+        <li>Having tests/specs lets you refactor with confidence.</li>
+        <li>Writing the specs first means that they are going to be more complete, so you can have more confidence in them.</li>
+        <li>Since you saw the specs fail, you know that they <b>can</b> fail. Which is a great thing.</li>
+        <li>The more confidence you have in your tests/specs, the faster you can improve your existing code.</li>
+        <li>Obviously, the bigger and more important a system you're building, the more helpful these techniques will be.</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/jasmine-logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Enough TDD stuff</h2>
+      <h3>Let's talk more about Jasmine</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Lots of matchers available</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tr>
+          <th>Matcher</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>toBe</td>
+          <td>Compares actual and expected with <code>===</code></td>
+        </tr>
+        <tr>
+          <td>toEqual</td>
+          <td>Compares simple object literals that <code>===</code> cannot</td>
+        </tr>
+        <tr>
+          <td>toMatch</td>
+          <td>Compares actual value against a regular expression</td>
+        </tr>
+        <tr>
+          <td>toBeDefined</td>
+          <td>Checks to see if the actual value is defined</td>
+        </tr>
+        <tr>
+          <td>toBeUndefined</td>
+          <td>Checks to see if the actual value is undefined</td>
+        </tr>
+        <tr>
+          <td>toBeNull</td>
+          <td>Checks to see if the actual value is null</td>
+        </tr>
+        <tr>
+          <td>toBeTruthy</td>
+          <td>Checks to see if the actual value coerces to <code>true</true></td>
+        </tr>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>More matchers</h2>
+    </hgroup>
+    <article>
+      <table>
+        <tr>
+          <th>Matcher</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>toBeFalsy</td>
+          <td>Checks to see if the actual value coerces to <code>false</true></td>
+        </tr>
+        <tr>
+          <td>toContain</td>
+          <td>Checks to see if an array contains the expected value</td>
+        </tr>
+        <tr>
+          <td>toBeLessThan</td>
+          <td>Self-explanatory</td>
+        </tr>
+        <tr>
+          <td>toBeGreaterThan</td>
+          <td>Self-explanatory</td>
+        </tr>
+        <tr>
+          <td>toBeCloseTo</td>
+          <td>For precision math comparisons on floating point numbers</td>
+        </tr>
+        <tr>
+          <td>toThrow</td>
+          <td>Checks to see if an error is thrown</td>
+        </tr>
+        <tr>
+          <td>toHaveBeenCalled</td>
+          <td>Checks to see if the spy was called</td>
+        </tr>
+        <tr>
+          <td>toHaveBeenCalledWith</td>
+          <td>Checks to see if the spy was called with the expected parameters</td>
+        </tr>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>And those are just the built-ins</h2>
+      <h3>There are Jasmine plugins as well</h3>
+    </hgroup>
+    <article>
+      <ul>
+        <li>
+          <a href="https://github.com/velesin/jasmine-jquery"><b>Jasmine jQuery</b></a><br /><br />
+          Provides matchers for jQuery objects, and an easy way to build HTML fixtures to test with.<br /><br />
+        </li>
+        <li>
+          <a href="https://github.com/raganwald/Underscore-Matchers-for-Jasmine"><b>Underscore Matchers for Jasmine</b></a><br /><br />
+          Provides matchers based on the methods in Underscore.js. Particularly useful for Backbone projects.<br /><br />
+        </li>
+        <li>
+          <a href="https://github.com/ferronrsmith/anuglarjs-jasmine-matchers"><b>AngularJS Matchers</b></a><br /><br />
+          Provides matchers for working with the Angular JS framework.
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>You can also write your own matchers</h2>
+    </hgroup>
+    <article>
+      <p>This example checks the last element in an array to see if it matches the expected value.</p>
+      <pre class="prettyprint" data-lang="javascript">
+this.addMatchers({
+  toEndWith: function(expected) {
+    return this.actual[this.actual.length - 1] === expected;
+  }
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>More handy features of Jasmine</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>
+          <b>Spies:</b><br />
+          Are extremely powerful. Can be used to fake objects and functions in more ways than we have time to cover.
+        </li>
+        <li>
+          <b>Async testing:</b><br />
+          Is Jasmine's weak point. However, the next major version of Jasmine will have a revamped API for async testing.
+        </li>
+        <li>
+          <b>jasmine.any</b><br />
+          A helper utility that lets you match against a constructor or "class".<br /><br />
+          <pre class="prettyprint" data-lang="javascript">
+expect(red).toBe(jasmine.any(Color));
+</pre>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+      <hgroup>
+        <h2>References</h2>
+      </hgroup>
+      <article>
+        <ul class="build">
+          <li>
+            <a href="http://pivotal.github.com/jasmine/"><b>The Docs</b></a><br /><br />
+            Are good, though they can be a little hard to follow if you're new to Jasmine.<br />
+            The cool thing about them is that they are a self-executing Jasmine spec describing Jasmine.<br /><br />
+          </li>
+          <li>
+            <a href="http://tryjasmine.com/"><b>Try Jasmine</b></a><br /><br />
+            An interactive in-browser console for trying out Jasmine. It's a great way to learn.
+          </li>
+        </ul>
+      </article>
+    </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/jasmine-logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Powerups</h2>
+      <h3>Tools to Improve Your Jasmine Testing</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Writing Specs in CoffeeScript</h2>
+      <h3>JavaScript Version:</h3>
+    </hgroup>
+    <article class="smaller">
+      <pre class="prettyprint" data-lang="javascript">
+describe("stringUtil", function() {
+  describe("firstWord", function() {
+    it("should return the first word of a string", function () {
+      expect(stringUtil.firstWord("one two")).toBe("one");
+    });
+
+    it("should delegate its logic to nthWord", function () {
+      spyOn(stringUtil, "nthWord");
+      stringUtil.firstWord("one two");
+
+      expect(stringUtil.nthWord).toHaveBeenCalled();
+    });
+  });
+
+  describe("nthWord", function() {
+    it("should return the nth word of a string", function () {
+      expect(stringUtil.nthWord("one two", 1)).toBe("one");
+      expect(stringUtil.nthWord("one two", 2)).toBe("two");
+    });
+  });
+});
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Writing Specs in CoffeeScript</h2>
+      <h3>CoffeeScript Version:</h3>
+    </hgroup>
+    <article class="smaller">
+      <pre class="prettyprint" data-lang="coffeescript">
+describe "stringUtil", ->
+  describe "firstWord", ->
+    it "should return the first word of a string", ->
+      expect(stringUtil.firstWord("one two")).toBe "one"
+
+    it "should delegate its logic to nthWord", ->
+      spyOn stringUtil, "nthWord"
+      stringUtil.firstWord "one two"
+      expect(stringUtil.nthWord).toHaveBeenCalled()
+
+  describe "nthWord", ->
+    it "should return the nth word of a string", ->
+      expect(stringUtil.nthWord("one two", 1)).toBe "one"
+      expect(stringUtil.nthWord("one two", 2)).toBe "two"
+</pre>
+    </article>
+    <p>CoffeeScript specs end up being a lot cleaner and easier to read.</p>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Jasmine in the Terminal</h2>
+      <h3>What it looks like:</h3>
+    </hgroup>
+    <article>
+      <img src="images/terminal.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Jasmine in the Terminal</h2>
+      <h3>Benefits</h3>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Specs can run as part of continuous integration test suite, just like your back-end code.</li>
+        <li>You don't have to run a browser to see what's going on.</li>
+        <li>
+          You can automatically kick off your specs every time you save.<br />
+          Instant feedback makes it much easier to keep moving forward.
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Jasmine in the Terminal</h2>
+      <h3>How it works</h3>
+    </hgroup>
+    <article>
+      <p>It depends on:</p>
+      <ul class="build">
+        <li>Node</li>
+        <li>Grunt (JavaScript based build tool)</li>
+        <li>The Watch plugin for Grunt</li>
+        <li>
+          Jasmine plugin for Grunt<br />
+          (Uses the PhantomJS headless web browser)
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Jasmine in the Terminal</h2>
+      <h3>Example configuration</h3>
+    </hgroup>
+    <article class="smaller">
+      <pre class="prettyprint" data-lang="javascript">
+module.exports = function(grunt) {
+  grunt.loadNpmTasks("grunt-contrib-jasmine");
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  
+  grunt.initConfig({
+    jasmine: {
+      test: {
+        src: ["lib/jquery.min.js", "src/mySource.js"],
+        options: {
+          specs: "spec/mySpec.js"
+        }
+      }
+    },
+    
+    watch: {
+      files: ["src/mySource.js", "spec/mySpec.coffee"],
+      tasks: ["default"]
+    }
+  });
+  
+  grunt.registerTask("default", ["jasmine:test"]);
+};
+</pre>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/jasmine-logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Closing Notes</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Jasmine Testing: A Cloak &amp; Dagger Guide</h2>
+      <h3>It's a book! With a discount!</h3>
+    </hgroup>
+    <article>
+      <img src="images/book.png" style="float: left; margin-right: 3em; height: 420px;" />
+      <ul class="build">
+        <li>The book is still in-progress, but you can buy it now and you'll get each chapter as it is written.</li>
+        <li>Regular price is $18, but you're getting a 75% discount!</li>
+        <li>$4.50 is the same price as a sugary Starbucks drink. :-)</li>
+        <li>The coupon code is <code>novawebdev</code>. It will be good for the next month.</li>
+        <li>You can find the book at: <a href="http://jasminetesting.com">jasminetesting.com</a>.</li>
+      <ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>A Drip of JavaScript</h2>
+      <h3>One quick JavaScript tip, delivered to your inbox weekly.</h3>
+      <p>You can find it at: <a href="http://adripofjavascript.com">adripofjavascript.com</a></p>
+    </hgroup>
+    <article>
+      <img src="images/drip.png" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>These Slides</h2>
+      <h3>They're on GitHub</h3>
+    </hgroup>
+    <article>
+      <p>You can find them at: <a href="http://joshuacc.github.com/tdd-with-jasmine/">joshuacc.github.com/tdd-with-jasmine/</a></p>
+      <p>Source code at: <a href="http://github.com/joshuacc/tdd-with-jasmine/">github.com/joshuacc/tdd-with-jasmine/</a></p>
+      <p>Feel free to use them to present at your company.</p>
+      <p>A link back would be nice. :-)</p>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/jasmine-logo.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>You have questions?</h2>
+      <h3>I have answers. (I hope!)</h3>
+    </hgroup>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
