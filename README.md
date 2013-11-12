@@ -1,4 +1,5 @@
-tdd-with-jasmine
-================
+# Closing the Testing Gap
 
-Slides for my presentation to the NoVa Web Development user group
+## Testing Your Client-side Code with Jasmine
+
+Slides for my presentation to the DCAST meetup.
