@@ -1,8 +1,8 @@
 var SLIDE_CONFIG = {
   // Slide settings
   settings: {
-    title: 'TDD with Jasmine',
-    subtitle: 'Testing Your JavaScript',
+    title: 'Closing the Testing Gap',
+    subtitle: 'Testing Your Client-side Code with Jasmine',
     useBuilds: true, // Default: true. False will turn off slide animation builds.
     usePrettify: true, // Default: true
     enableSlideAreas: true, // Default: true. False turns off the click areas on either slide of the slides.

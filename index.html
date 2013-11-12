@@ -60,6 +60,7 @@ URL: https://code.google.com/p/io-2012-slides
         <li>What is unit testing?</li>
         <li>What is Test Driven Development?</li>
         <li>What is Jasmine?</li>
+        <li>Where does Jasmine fit into the testing universe?</li>
         <li>How can these things help me?</li>
         <li>How do I use Jasmine?</li>
       </ul>
@@ -74,6 +75,8 @@ URL: https://code.google.com/p/io-2012-slides
       <p>Raise your hands for yes.</p>
       <ul class="build fade">
         <li>How many of you are primarily JS developers?</li>
+        <li>How many of you are server-side developers?</li>
+        <li>How many of you are test engineers or QAs?</li>
         <li>How many of you know what unit testing is?</li>
         <li>How many of you write unit tests for your JS?</li>
         <li>How many of you know what Test Driven Development is?</li>
@@ -122,6 +125,33 @@ describe("Addition function", function() {
         <li>Write your unit of code and see the test pass. <span class="green">(Green)</span></li>
         <li>Make your code better, using the tests to keep you safe. <span class="blue">(Refactor)</span></li>
       </ol>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>A Standard Web Application</h2>
+    </hgroup>
+    <article class="flexbox vcenter">
+      <img src="images/architecture1.png">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>This is how web apps tend to get tested</h2>
+    </hgroup>
+    <article class="flexbox vcenter">
+      <img src="images/architecture2.png">
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>And this is where Jasmine comes into play</h2>
+    </hgroup>
+    <article class="flexbox vcenter">
+      <img src="images/architecture3.png">
     </article>
   </slide>
 
@@ -820,64 +850,6 @@ expect(red).toBe(jasmine.any(Color));
 
   <slide>
     <hgroup>
-      <h2>Writing Specs in CoffeeScript</h2>
-      <h3>JavaScript Version:</h3>
-    </hgroup>
-    <article class="smaller">
-      <pre class="prettyprint" data-lang="javascript">
-describe("stringUtil", function() {
-  describe("firstWord", function() {
-    it("should return the first word of a string", function () {
-      expect(stringUtil.firstWord("one two")).toBe("one");
-    });
-
-    it("should delegate its logic to nthWord", function () {
-      spyOn(stringUtil, "nthWord");
-      stringUtil.firstWord("one two");
-
-      expect(stringUtil.nthWord).toHaveBeenCalled();
-    });
-  });
-
-  describe("nthWord", function() {
-    it("should return the nth word of a string", function () {
-      expect(stringUtil.nthWord("one two", 1)).toBe("one");
-      expect(stringUtil.nthWord("one two", 2)).toBe("two");
-    });
-  });
-});
-</pre>
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Writing Specs in CoffeeScript</h2>
-      <h3>CoffeeScript Version:</h3>
-    </hgroup>
-    <article class="smaller">
-      <pre class="prettyprint" data-lang="coffeescript">
-describe "stringUtil", ->
-  describe "firstWord", ->
-    it "should return the first word of a string", ->
-      expect(stringUtil.firstWord("one two")).toBe "one"
-
-    it "should delegate its logic to nthWord", ->
-      spyOn stringUtil, "nthWord"
-      stringUtil.firstWord "one two"
-      expect(stringUtil.nthWord).toHaveBeenCalled()
-
-  describe "nthWord", ->
-    it "should return the nth word of a string", ->
-      expect(stringUtil.nthWord("one two", 1)).toBe "one"
-      expect(stringUtil.nthWord("one two", 2)).toBe "two"
-</pre>
-    </article>
-    <p>CoffeeScript specs end up being a lot cleaner and easier to read.</p>
-  </slide>
-
-  <slide>
-    <hgroup>
       <h2>Jasmine in the Terminal</h2>
       <h3>What it looks like:</h3>
     </hgroup>
@@ -915,7 +887,7 @@ describe "stringUtil", ->
         <li>Grunt (JavaScript based build tool)</li>
         <li>The Watch plugin for Grunt</li>
         <li>
-          Jasmine plugin for Grunt<br />
+          grunt-contrib-jasmine plugin for Grunt<br />
           (Uses the PhantomJS headless web browser)
         </li>
       </ul>
@@ -935,23 +907,43 @@ module.exports = function(grunt) {
   
   grunt.initConfig({
     jasmine: {
-      test: {
+      options: {
+        specs: "spec/mySpec.js"
+      },
+      normal: {
         src: ["lib/jquery.min.js", "src/mySource.js"],
+      },
+      ci: {
+        src: "<%= jasmine.normal.src %>",
         options: {
-          specs: "spec/mySpec.js"
+          reporter: require('jshint-junit-reporter'),
+          reporterOutput: "output/tests/jshint-output.xml"
         }
       }
     },
     
     watch: {
-      files: ["src/mySource.js", "spec/mySpec.coffee"],
-      tasks: ["default"]
+      files: ["src/mySource.js", "spec/mySpec.js"],
+      tasks: ["jasmine:normal"]
     }
   });
-  
-  grunt.registerTask("default", ["jasmine:test"]);
 };
 </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Running Jasmine with Karma</h2>
+    </hgroup>
+    <article>
+      <p>Karma is an alternate test runner from Google.
+      <ul class="build">
+        <li>Runs your tests in <b>any</b> web browser</li>
+        <li>But can't run them headlessly (except Phantom)</li>
+        <li>Great for better test coverage on your CI server</li>
+        <li>Can integrate with Saucelabs to run tests on all supported browsers simultaneously.</li>
+      </ul>
     </article>
   </slide>
 
@@ -996,8 +988,8 @@ module.exports = function(grunt) {
       <h3>They're on GitHub</h3>
     </hgroup>
     <article>
-      <p>You can find them at: <a href="http://joshuacc.github.com/tdd-with-jasmine/">joshuacc.github.com/tdd-with-jasmine/</a></p>
-      <p>Source code at: <a href="http://github.com/joshuacc/tdd-with-jasmine/">github.com/joshuacc/tdd-with-jasmine/</a></p>
+      <p>You can find them at: <a href="http://joshuacc.github.io/closing-the-testing-gap">joshuacc.github.io/closing-the-testing-gap/</a></p>
+      <p>Source code at: <a href="https://github.com/joshuacc/closing-the-testing-gap/">github.com/joshuacc/closing-the-testing-gap/</a></p>
       <p>Feel free to use them to present at your company.</p>
       <p>A link back would be nice. :-)</p>
     </article>
